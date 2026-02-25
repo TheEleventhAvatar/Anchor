@@ -132,6 +132,18 @@ CREATE TABLE transcripts (
 
 ## Deployment
 
+### CI/CD Pipeline
+
+**Automated builds** trigger on:
+- Push to `main` branch
+- New tags (`v1.0.0`, `v1.0.1`, etc.)
+- Pull requests
+
+**Pipeline stages:**
+1. **Test** - Run tests and code checks
+2. **Build** - Cross-platform packages
+3. **Deploy** - Store submissions
+
 ### GitHub Releases (Recommended)
 
 1. **Tag a new release:**
@@ -140,26 +152,62 @@ CREATE TABLE transcripts (
    git push origin v1.0.0
    ```
 
-2. **Automatic builds** will create installers for:
-   - Windows (.msi)
-   - macOS (.dmg)
-   - Linux (.deb)
+2. **Automatic builds** create installers:
+   - Windows (.msix, .msi, .exe)
+   - macOS (.dmg, .app)
+   - Linux (.deb, .AppImage, .snap)
 
 3. **Download installers** from GitHub Releases
+
+### App Store Deployment
+
+#### Microsoft Store
+```bash
+# Build MSIX package
+npm run tauri build -- --target msix
+
+# Submit to Microsoft Partner Center
+# Store submission required
+```
+
+#### Mac App Store
+```bash
+# Build DMG with code signing
+npm run tauri build -- --target dmg
+
+# Submit to App Store Connect
+# Apple Developer account required
+```
+
+#### Snap Store (Linux)
+```bash
+# Build snap package
+npm run tauri build -- --target snap
+
+# Upload to Snap Store
+snapcraft upload --release=stable *.snap
+```
+
+### Local Deployment
+
+```bash
+# Windows
+.\scripts\deploy.ps1
+
+# macOS/Linux
+chmod +x scripts/deploy.sh
+./scripts/deploy.sh
+```
 
 ### Auto-Updates
 
 The app includes Tauri Updater for automatic updates when new releases are published.
 
-### Local Build
+### Environment Variables
 
-```bash
-# Build for your platform
-npm run tauri build
-
-# Find installers in:
-ls src-tauri/target/release/bundle/
-```
+For store deployments, set these secrets:
+- `SNAPCRAFT_LOGIN` - Snap Store credentials
+- `GITHUB_TOKEN` - GitHub API token
 
 ## License
 
