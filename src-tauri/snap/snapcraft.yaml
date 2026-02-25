@@ -1,0 +1,29 @@
+name: pocket-desktop
+version: '0.1.0'
+summary: Pocket Desktop - AI transcript companion
+description: |
+  A production-grade desktop companion app for Pocket - a tiny AI device 
+  that lives on your phone and turns everything you say and hear into 
+  clear notes, action items, and search.
+
+grade: stable
+confinement: strict
+base: core20
+
+apps:
+  pocket-desktop:
+    command: bin/pocket-desktop
+    plugs:
+      - home
+      - network
+
+parts:
+  pocket-desktop:
+    plugin: rust
+    source: .
+    build-packages:
+      - pkg-config
+      - libwebkit2gtk-4.0-dev
+      - libgtk-3-dev
+      - libappindicator3-dev
+      - librsvg2-dev
