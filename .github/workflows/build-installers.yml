@@ -19,6 +19,10 @@ jobs:
         include:
           - platform: windows-latest
             targets: ['msi', 'nsis']
+          - platform: macos-latest
+            targets: ['app', 'dmg']
+          - platform: ubuntu-latest
+            targets: ['deb', 'appimage']
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -53,4 +57,4 @@ jobs:
           releaseBody: 'Download installers for Pocket Desktop version ${{ github.ref_name }}'
           releaseDraft: false
           prerelease: false
-          args: --bundles msi,nsis
+          args: --bundles ${{ join(matrix.targets, ',') }}
