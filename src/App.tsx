@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { listen } from "@tauri-apps/api/event";
 import { invoke } from "@tauri-apps/api/core";
 
@@ -78,6 +78,8 @@ function App() {
       setSecureData(data.map(item => ({ data: item })));
     } catch (err) {
       setError(`Failed to load data: ${err}`);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -100,7 +102,7 @@ function App() {
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && newData.trim()) {
       addSecureData();
     }
