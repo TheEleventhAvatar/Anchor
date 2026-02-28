@@ -111,12 +111,7 @@ function App() {
   const LockedView = () => (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center">
       <div className="text-center space-y-6">
-        <div className="w-2 h-2 mx-auto bg-gray-800 rounded-full flex items-center justify-center">
-          <svg className="w-1 h-1 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-          </svg>
-        </div>
-        <h1 className="text-3xl font-bold">Anchor - Locked</h1>
+        <h1 className="text-3xl font-bold">**LOCKED**</h1>
         <h2 className="text-xl font-semibold">Platform Setup Required</h2>
         
         <div className="bg-gray-800 rounded-lg p-4 max-w-md">
@@ -163,7 +158,7 @@ function App() {
           </div>
         </div>
         
-        <p className="text-gray-400 text-lg">Please Insert Your SanDisk USB Key</p>
+        <p className="text-gray-400 text-lg font-bold"><strong>Done? Please Insert Your SanDisk USB</strong></p>
         
         {platformInfo && (
           <div className="bg-gray-800 rounded-lg p-3 max-w-md">
@@ -183,7 +178,6 @@ function App() {
           <div className="flex justify-between items-center py-4">
             <h1 className="text-2xl font-bold text-gray-900">Anchor Dashboard</h1>
             <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
               <span className="text-sm text-gray-600">USB Connected</span>
               {usbSerial && (
                 <span className="text-xs text-gray-500 bg-gray-200 px-2 py-1 rounded">
@@ -221,7 +215,6 @@ function App() {
               <div>
                 <div className="mb-4">
                   <div className="flex items-center space-x-2 mb-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                     <span className="text-sm text-green-600 font-medium">Database Active</span>
                   </div>
                   <p className="text-sm text-gray-500">Encrypted database ready for secure operations</p>
@@ -290,25 +283,15 @@ function App() {
               <div className="text-sm text-gray-500">
                 Remove USB to lock immediately
               </div>
-              <div className="text-sm text-gray-500">
-                Data entries: {secureData.length}
-              </div>
             </div>
           </div>
         </div>
         
         <div className="mt-8 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-          <div className="flex">
-            <div className="flex-shrink-0">
-              <svg className="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <div className="ml-3">
-              <h3 className="text-sm font-medium text-yellow-800">Security Reminder</h3>
-              <div className="mt-2 text-sm text-yellow-700">
-                <p>Your session will remain active as long as the USB device is connected. Removing the USB will immediately lock the application and secure your data.</p>
-              </div>
+          <div className="ml-3">
+            <h3 className="text-sm font-medium text-yellow-800">Security Reminder</h3>
+            <div className="mt-2 text-sm text-yellow-700">
+              <p>Your session will remain active as long as the USB device is connected. Removing the USB will immediately lock the application and secure your data.</p>
             </div>
           </div>
         </div>
