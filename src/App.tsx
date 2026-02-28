@@ -32,6 +32,8 @@ function App() {
           setDbInitialized(false);
           setSecureData([]);
           console.log("USB Connected - Serial:", serial_number);
+          // Check for existing database after a short delay
+          setTimeout(() => checkExistingDatabase(), 500);
         } else {
           setIsUnlocked(false);
           setUsbSerial(null);
@@ -69,6 +71,19 @@ function App() {
       setError(`Failed to initialize database: ${err}`);
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Auto-load data if database was previously initialized
+  const checkExistingDatabase = async () => {
+    if (usbSerial && !dbInitialized) {
+      try {
+        await loadSecureData();
+        setDbInitialized(true);
+      } catch (err) {
+        // Database doesn't exist yet, that's okay
+        console.log("No existing database found");
+      }
     }
   };
 
@@ -264,7 +279,7 @@ function App() {
           </div>
         </div>
         
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="mt-8 grid grid-cols-1 gap-6">
           <div className="bg-white rounded-lg shadow p-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-2">Session Status</h2>
             <p className="text-gray-600">Active session with hardware key</p>
@@ -272,16 +287,6 @@ function App() {
               <div className="text-sm text-green-600 font-medium">✓ Authenticated</div>
               <div className="text-sm text-gray-500 mt-1">
                 Database: {dbInitialized ? "Initialized" : "Not Initialized"}
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-2">Security Info</h2>
-            <p className="text-gray-600">Hardware-based encryption active</p>
-            <div className="mt-4">
-              <div className="text-sm text-gray-500">
-                Remove USB to lock immediately
               </div>
             </div>
           </div>

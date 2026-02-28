@@ -110,14 +110,9 @@ async fn initialize_database(state: tauri::State<'_, Arc<Mutex<AppState>>>) -> R
     
     match Connection::open(&db_path) {
         Ok(conn) => {
-            // Initialize database schema
+            // Initialize database schema (only create if not exists)
             conn.execute(
-                "DROP TABLE IF EXISTS secure_data",
-                [],
-            ).map_err(|e| format!("Failed to drop table: {}", e))?;
-            
-            conn.execute(
-                "CREATE TABLE secure_data (
+                "CREATE TABLE IF NOT EXISTS secure_data (
                     rowid INTEGER PRIMARY KEY,
                     data TEXT NOT NULL
                 )",
@@ -237,9 +232,9 @@ async fn usb_polling_task(app_handle: AppHandle, state: Arc<Mutex<AppState>>) {
                     serial_number: state_guard.serial_number.clone(),
                 });
             } else {
-                // USB disconnected
+                // USB disconnected - keep database connection for potential reconnection
                 state_guard.serial_number = None;
-                state_guard.db_connection = None;
+                // Don't immediately close DB connection in case USB is quickly reconnected
                 
                 // Platform-specific logging
                 #[cfg(target_os = "linux")]
