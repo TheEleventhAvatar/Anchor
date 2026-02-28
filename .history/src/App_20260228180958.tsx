@@ -145,7 +145,7 @@ function App() {
                 Or manually create udev rule:
               </p>
               <p className="text-xs text-gray-500 font-mono bg-gray-900 p-2 rounded">
-                echo 'SUBSYSTEM=="usb", ATTR{'{'}idVendor{'}'}=="0x0781", MODE="0666"' | sudo tee /etc/udev/rules.d/99-anchor-sandisk.rules
+                echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="0x0781", MODE="0666"' | sudo tee /etc/udev/rules.d/99-anchor-sandisk.rules
               </p>
             </div>
             

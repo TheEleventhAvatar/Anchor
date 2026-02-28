@@ -19,7 +19,6 @@ function App() {
   const [newData, setNewData] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [platformInfo, setPlatformInfo] = useState<string | null>(null);
 
   useEffect(() => {
     const setupHardwareListener = async () => {
@@ -42,14 +41,6 @@ function App() {
         }
         setError(null);
       });
-
-      // Get platform-specific setup info
-      try {
-        const info = await invoke<string>("setup_platform_permissions");
-        setPlatformInfo(info);
-      } catch (err) {
-        console.log("Platform info:", err);
-      }
 
       return unlisten;
     };
@@ -115,61 +106,15 @@ function App() {
           </svg>
         </div>
         <h1 className="text-3xl font-bold">Anchor - Locked</h1>
-        <h2 className="text-xl font-semibold">Platform Setup Required</h2>
-        
-        <div className="bg-gray-800 rounded-lg p-4 max-w-md">
-          <p className="text-sm text-gray-500 mb-4">
-            Your secure database is encrypted and inaccessible. Complete the platform setup below, then insert your SanDisk USB device.
-          </p>
-          
-          <div className="space-y-4 text-left">
-            <div className="border-l-4 border-blue-500 pl-4">
-              <h3 className="font-semibold text-blue-400">Windows Users</h3>
-              <p className="text-sm text-gray-400 mt-1">
-                1. Download <a href="https://github.com/pbatard/libwdi/releases" target="_blank" rel="noopener noreferrer" className="text-blue-300 underline">zadig-2.9.exe</a>
-              </p>
-              <p className="text-sm text-gray-400">
-                2. Run it → Options → List All Devices → Select SanDisk USB → Replace Driver
-              </p>
-            </div>
-            
-            <div className="border-l-4 border-green-500 pl-4">
-              <h3 className="font-semibold text-green-400">Linux Users</h3>
-              <p className="text-sm text-gray-400 mt-1">
-                Run the setup script for USB permissions:
-              </p>
-              <p className="text-xs text-gray-500 font-mono bg-gray-900 p-2 rounded">
-                ./scripts/setup_linux.sh
-              </p>
-              <p className="text-sm text-gray-400 mt-1">
-                Or manually create udev rule:
-              </p>
-              <p className="text-xs text-gray-500 font-mono bg-gray-900 p-2 rounded">
-                echo 'SUBSYSTEM=="usb", ATTR{'{'}idVendor{'}'}=="0x0781", MODE="0666"' | sudo tee /etc/udev/rules.d/99-anchor-sandisk.rules
-              </p>
-            </div>
-            
-            <div className="border-l-4 border-yellow-500 pl-4">
-              <h3 className="font-semibold text-yellow-400">macOS Users</h3>
-              <p className="text-sm text-gray-400 mt-1">
-                No special setup required. Anchor can detect SanDisk USB devices automatically.
-              </p>
-              <p className="text-sm text-gray-400">
-                If you experience issues, check Security & Privacy permissions.
-              </p>
-            </div>
-          </div>
-        </div>
-        
+        <h2 className="text-xl font-semibold">Note: Windows Users need to complete the quick 1 minute setup</h2>
+        <p>Download zadig-2.9.exe from <a href="https://github.com/pbatard/libwdi/releases" target="_blank" rel="noopener noreferrer">https://github.com/pbatard/libwdi/releases</a></p>
+        <p>Run it {"->"} click on options {"->"} List all Devices {"->"} select your SanDisk USB {"->"} Replace Driver </p>
         <p className="text-gray-400 text-lg">Please Insert Your SanDisk USB Key</p>
-        
-        {platformInfo && (
-          <div className="bg-gray-800 rounded-lg p-3 max-w-md">
-            <p className="text-xs text-gray-500">
-              <span className="font-semibold">Platform Info:</span> {platformInfo}
-            </p>
-          </div>
-        )}
+        <div className="bg-gray-800 rounded-lg p-4 max-w-md">
+          <p className="text-sm text-gray-500">
+            Your secure database is encrypted and inaccessible. Insert your registered SanDisk USB device to unlock access.
+          </p>
+        </div>
       </div>
     </div>
   );

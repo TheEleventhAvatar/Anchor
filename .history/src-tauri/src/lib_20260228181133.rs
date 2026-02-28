@@ -1,5 +1,5 @@
 use nusb;
-use rusqlite::{Connection, Result as SqliteResult};
+use rusqlite::{Connection};
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
 use tauri::{AppHandle, Emitter};

@@ -22,41 +22,6 @@ impl Default for AppState {
     }
 }
 
-#[cfg(target_os = "linux")]
-fn generate_udev_rule() -> Result<String, String> {
-    let rule = "SUBSYSTEM==\"usb\", ATTR{idVendor}==\"0x0781\", MODE=\"0666\"\n".to_string();
-    let udev_path = "/etc/udev/rules.d/99-anchor-sandisk.rules";
-    
-    println!("=== Linux USB Setup Required ===");
-    println!("To access USB devices without sudo, create a udev rule:");
-    println!("echo '{}' | sudo tee {}", rule.trim(), udev_path);
-    println!("sudo udevadm control --reload-rules");
-    println!("sudo udevadm trigger");
-    println!("================================");
-    
-    Ok(rule)
-}
-
-#[cfg(target_os = "macos")]
-fn check_macos_permissions() -> Result<String, String> {
-    println!("=== macOS USB Access ===");
-    println!("Anchor can detect SanDisk USB devices without special permissions.");
-    println!("If you experience issues, ensure the app has Security & Privacy permissions.");
-    println!("========================");
-    
-    Ok("macOS USB access available".to_string())
-}
-
-#[cfg(target_os = "windows")]
-fn check_windows_permissions() -> Result<String, String> {
-    println!("=== Windows USB Driver Setup ===");
-    println!("Ensure WinUSB driver is installed via Zadig for SanDisk devices.");
-    println!("Download: https://github.com/pbatard/libwdi/releases");
-    println!("================================");
-    
-    Ok("Windows USB driver check complete".to_string())
-}
-
 #[tauri::command]
 fn is_usb_connected() -> bool {
     // Deprecated: Use event-driven model instead
@@ -77,21 +42,6 @@ async fn get_usb_serial_number() -> Result<Option<String>, String> {
         }
         Err(e) => Err(format!("Failed to list devices: {}", e)),
     }
-}
-
-#[tauri::command]
-async fn setup_platform_permissions() -> Result<String, String> {
-    #[cfg(target_os = "linux")]
-    return generate_udev_rule();
-    
-    #[cfg(target_os = "macos")]
-    return check_macos_permissions();
-    
-    #[cfg(target_os = "windows")]
-    return check_windows_permissions();
-    
-    #[cfg(not(any(target_os = "linux", target_os = "macos", target_os = "windows")))]
-    Ok("Unsupported platform".to_string())
 }
 
 #[tauri::command]
@@ -190,16 +140,6 @@ async fn wipe_session(state: tauri::State<'_, Arc<Mutex<AppState>>>) -> Result<S
 async fn usb_polling_task(app_handle: AppHandle, state: Arc<Mutex<AppState>>) {
     let mut interval = interval(Duration::from_secs(1));
 
-    // Platform-specific setup
-    #[cfg(target_os = "linux")]
-    let _ = generate_udev_rule();
-    
-    #[cfg(target_os = "macos")]
-    let _ = check_macos_permissions();
-    
-    #[cfg(target_os = "windows")]
-    let _ = check_windows_permissions();
-
     loop {
         interval.tick().await;
         
@@ -218,16 +158,6 @@ async fn usb_polling_task(app_handle: AppHandle, state: Arc<Mutex<AppState>>) {
                 if let Ok(mut devices) = nusb::list_devices() {
                     if let Some(device) = devices.find(|d| d.vendor_id() == 0x0781) {
                         state_guard.serial_number = Some(format!("{:?}", device.product_id()));
-                        
-                        // Platform-specific logging
-                        #[cfg(target_os = "linux")]
-                        println!("Linux: SanDisk USB detected - Device ID: {:?}", device.product_id());
-                        
-                        #[cfg(target_os = "macos")]
-                        println!("macOS: SanDisk USB detected - Device ID: {:?}", device.product_id());
-                        
-                        #[cfg(target_os = "windows")]
-                        println!("Windows: SanDisk USB detected - Device ID: {:?}", device.product_id());
                     }
                 }
                 
@@ -240,16 +170,6 @@ async fn usb_polling_task(app_handle: AppHandle, state: Arc<Mutex<AppState>>) {
                 // USB disconnected
                 state_guard.serial_number = None;
                 state_guard.db_connection = None;
-                
-                // Platform-specific logging
-                #[cfg(target_os = "linux")]
-                println!("Linux: SanDisk USB disconnected");
-                
-                #[cfg(target_os = "macos")]
-                println!("macOS: SanDisk USB disconnected");
-                
-                #[cfg(target_os = "windows")]
-                println!("Windows: SanDisk USB disconnected");
                 
                 // Emit hardware-status event
                 let _ = app_handle.emit("hardware-status", HardwareStatusEvent {
@@ -284,8 +204,7 @@ pub fn run() {
             initialize_database,
             add_secure_data,
             get_secure_data,
-            wipe_session,
-            setup_platform_permissions
+            wipe_session
         ])
         .manage(app_state)
         .run(tauri::generate_context!())
