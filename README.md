@@ -1,13 +1,33 @@
+# Anchor Desktop
+
+A production-grade desktop companion app for Anchor - a tiny AI device that lives on your phone and turns everything you say and hear into clear notes, action items, and search. We combine custom hardware, AI, and software to build the best note-taking experience for people who talk and move fast.
+
+Built with Tauri 2.x, Rust, and React + TypeScript.
+
 ## Features
 
 - **Offline-first design**: Local SQLite database with phone app sync capabilities
-- **Real-time simulation**: Mock transcript generation every 10 seconds when Pocket is connected
+- **Real-time simulation**: Mock transcript generation every 10 seconds when Anchor is connected
 - **System tray integration**: Show/hide window, quit application
-- **Native notifications**: Desktop alerts for new transcripts from Pocket
-- **Pocket status monitoring**: Connection status, battery level, last seen
+- **Native notifications**: Desktop alerts for new transcripts from Anchor
+- **Anchor status monitoring**: Connection status, battery level, last seen
 - **Sync management**: Manual sync, offline/online modes
 - **Clean architecture**: Modular Rust backend with separate concerns
 
+## Product Vision
+
+Anchor is a tiny AI device that:
+- Lives on your phone
+- Captures everything you say and hear
+- Transforms speech into clear notes and action items
+- Provides powerful search capabilities
+- Built for people who talk and move fast
+
+The desktop companion provides:
+- Larger screen for reviewing and organizing notes
+- Advanced editing capabilities
+- Backup and sync management
+- Desktop notifications for new captures
 
 ## Architecture
 
@@ -62,7 +82,7 @@ CREATE TABLE transcripts (
 2. The application will:
    - Open the main window
    - Start backend services
-   - Begin generating mock transcripts when Pocket is connected
+   - Begin generating mock transcripts when Anchor is connected
 
 ### Building
 
@@ -78,10 +98,10 @@ CREATE TABLE transcripts (
 
 ## Usage
 
-### Pocket Simulation
-1. Click "Connect Phone" in the sidebar to simulate Pocket device connection
+### Anchor Simulation
+1. Click "Connect Phone" in the sidebar to simulate Anchor device connection
 2. Mock transcripts will be generated every 10 seconds
-3. View Pocket status including battery level
+3. View Anchor status including battery level
 
 ### Sync Management
 1. Toggle between online/offline modes
@@ -96,9 +116,9 @@ CREATE TABLE transcripts (
 ## Technical Details
 
 ### Background Tasks
-- Runs every 10 seconds when Pocket is connected
+- Runs every 10 seconds when Anchor is connected
 - Generates mock transcripts with realistic content
-- Updates Pocket status timestamps
+- Updates Anchor status timestamps
 
 ### State Management
 - React hooks for local state

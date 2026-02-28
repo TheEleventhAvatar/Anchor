@@ -5,6 +5,10 @@
   "windows": ["main"],
   "permissions": [
     "core:default",
-    "opener:default"
+    "fs-pro:default",
+    "locale:default",
+    "notification:default",
+    "shell:default",
+    "sql:default"
   ]
 }

@@ -1,11 +1,11 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "pocket",
+  "productName": "anchor",
   "version": "0.1.0",
-  "identifier": "rewant.pocket",
+  "identifier": "rewant.anchor",
   "build": {
     "frontendDist": "../dist",
-    "devUrl": "http://localhost:5173",
+    "devUrl": "http://localhost:1420",
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build"
   },
@@ -13,10 +13,16 @@
     "windows": [
       {
         "label": "main",
-        "title": "Pocket",
-        "width": 1000,
-        "height": 700,
-        "resizable": true
+        "title": "Anchor",
+        "width": 1200,
+        "height": 800,
+        "resizable": true,
+        "decorations": false,
+        "transparent": false,
+        "shadow": true,
+        "center": true,
+        "minWidth": 800,
+        "minHeight": 600
       }
     ]
   },
@@ -26,7 +32,7 @@
     "icon": [
       "icons/pocket.ico",
       "icons/pocket_512.png",
-      "icons/pocket_rgba.png"
+      "icons/pocket.png"
     ],
     "windows": {
       "digestAlgorithm": "sha256",
@@ -37,6 +43,30 @@
     "updater": {
       "active": true,
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDQ5MEM0MjI4RjQ3NjM3RjYKUldSWFk5V2pJQk1QSWN6N2VnWVpQSlRZM2FJZ0lJc0FZd0FvRUFnQlVBMHZDSEJ3T2k4N2VnWVpQSlRZM2FJZ0lJc0FZd0FvRUFnQlVB"
+    },
+    "deep-link": {
+      "desktop": {
+        "schemes": ["anchor"]
+      }
+    },
+    "fs-pro": {
+      "permissions": [
+        "fs-pro:allow-read-text-file",
+        "fs-pro:allow-write-text-file",
+        "fs-pro:allow-exists",
+        "fs-pro:allow-metadata"
+      ]
+    },
+    "locale": {
+      "permissions": [
+        "locale:allow-get-locale"
+      ]
+    },
+    "sql": {
+      "preload": ["sqlite:anchor_notes.db"]
+    },
+    "notification": {
+      "permissions": ["notification:allow-is-permission-granted", "notification:allow-request-permission", "notification:allow-show"]
     }
   }
 }
