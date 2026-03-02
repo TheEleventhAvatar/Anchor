@@ -29,14 +29,20 @@
   "bundle": {
     "active": true,
     "targets": ["msi", "nsis"],
+    "publisher": "Rewant Goenka",
     "icon": [
       "icons/pocket.ico",
       "icons/pocket_512.png",
       "icons/pocket.png"
     ],
     "windows": {
-      "digestAlgorithm": "sha256",
-      "timestampUrl": ""
+      "wix": {
+        "language": "en-US"
+      },
+      "nsis": {
+        "languages": ["English"]
+      },
+      "digestAlgorithm": "sha256"
     }
   },
   "plugins": {
@@ -66,7 +72,11 @@
       "preload": ["sqlite:anchor_notes.db"]
     },
     "notification": {
-      "permissions": ["notification:allow-is-permission-granted", "notification:allow-request-permission", "notification:allow-show"]
+      "permissions": [
+        "notification:allow-is-permission-granted",
+        "notification:allow-request-permission",
+        "notification:allow-show"
+      ]
     }
   }
 }
