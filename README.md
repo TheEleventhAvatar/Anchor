@@ -48,7 +48,13 @@ Anchor is a cross-platform desktop application that provides hardware-based auth
 1. Download the latest macOS release
 2. Install the application
 3. Grant necessary permissions in System Preferences → Security & Privacy
-4. Launch Anchor (no additional setup required)
+4. # Remove macOS quarantine flag
+sudo xattr -r -d com.apple.quarantine /path/to/anchor.app
+
+# Make sure the app is executable
+chmod +x /path/to/anchor.app/Contents/MacOS/anchor
+
+5. Launch Anchor (no additional setup required)
 
 ### Linux Setup
 1. Download the latest Linux release
