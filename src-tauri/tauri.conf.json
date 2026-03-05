@@ -28,7 +28,7 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["msi", "nsis"],
+    "targets": ["msi", "nsis", "dmg"],
     "publisher": "Rewant Goenka",
     "icon": [
       "icons/pocket.ico",
@@ -43,6 +43,15 @@
         "languages": ["English"]
       },
       "digestAlgorithm": "sha256"
+    },
+    "macOS": {
+      "entitlements": null,
+      "exceptionDomain": "",
+      "frameworks": [],
+      "providerShortName": null,
+      "signingIdentity": null,
+      "minimumSystemVersion": "10.15",
+      "hardenedRuntime": true
     }
   },
   "plugins": {
