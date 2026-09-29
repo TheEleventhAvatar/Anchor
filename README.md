@@ -1,6 +1,6 @@
 # Anchor - Hardware-Based Security Application
 
-https://www.reddit.com/r/tauri/comments/1rhoqz9/i_built_a_hardwarelocked_second_brain_with_tauri/
+https://www.reddit.com/r/tauri/comments/1rhoqz9/i_built_a_hardwarelocked_second_brain_with_tauri/ ( 13 upvotes )
 
 
 
