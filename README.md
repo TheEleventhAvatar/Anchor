@@ -2,6 +2,12 @@
 
 https://www.reddit.com/r/tauri/comments/1rhoqz9/i_built_a_hardwarelocked_second_brain_with_tauri/
 
+
+
+https://github.com/user-attachments/assets/cc468bd4-8bb7-421f-9ae7-8420b4aa705f
+
+
+
 Anchor is a cross-platform desktop application that provides hardware-based authentication using SanDisk USB devices. The application automatically detects USB connection/disconnection events and provides secure database access only when an authorized USB device is connected.
 
 ## 🚀 Features
